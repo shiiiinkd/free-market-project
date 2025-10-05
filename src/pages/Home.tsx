@@ -12,8 +12,10 @@ function Home() {
 
   const fetchItemsTable = async (keyword: string) => {
     let query = supabase.from("items").select();
-    if (keyword && keyword.trim().length > 0){
-      query = query.or(`item_name.ilike.%${keyword}%,item_detail.ilike.%${keyword}%`);
+    if (keyword && keyword.trim().length > 0) {
+      query = query.or(
+        `item_name.ilike.%${keyword}%,item_detail.ilike.%${keyword}%`
+      );
     }
     const { data, error } = await query;
     setItems(data || []);
@@ -26,13 +28,10 @@ function Home() {
     fetchItemsTable(q);
   }, [q]);
 
-
   return (
-    <div className="flex flex-wrap snap-x snap-mandatory scrollbar-hide">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {items.map((item) => (
-        <div key={item.item_id} className="w-1/3 flex-shrink-0 snap-start"> 
-          <ItemCard key={item.item_id} item={item} />
-        </div>
+        <ItemCard key={item.item_id} item={item} />
       ))}
     </div>
   );
