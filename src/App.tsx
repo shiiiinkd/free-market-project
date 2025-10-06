@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./hooks/useAuth";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import ItemPage from "./pages/ItemDetail";
@@ -9,19 +10,51 @@ import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
 
 function App() {
+  const { user, loading } = useAuth();
+
+  // 認証の読み込み中
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-gray-500">読み込み中...</div>
+      </div>
+    );
+  }
+
   return (
     <Routes>
-      {/* ヘッダーとフッターを常に表示するページ */}
       <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="chats" element={<Chats />} />
-        <Route path="sold-items" element={<SoldItem />} />
-        <Route path="/item/:item_id" element={<ItemPage />} />
-        <Route path="/chat/:item_id" element={<ChatPage />} />
-        <Route path="/mypage" element={<MyPage />} />
+        {/* 認証が必要なページ */}
+        <Route
+          index
+          element={user ? <Home /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="chats"
+          element={user ? <Chats /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="sold-items"
+          element={user ? <SoldItem /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="item/:item_id"
+          element={user ? <ItemPage /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="chat/:item_id"
+          element={user ? <ChatPage /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="mypage"
+          element={user ? <MyPage /> : <Navigate to="/login" replace />}
+        />
 
-        {/* 独立したページ */}
-        <Route path="/login" element={<Login />} />
+        {/* ログインページ：ログイン済みの場合はホームにリダイレクト */}
+        <Route
+          path="login"
+          element={user ? <Navigate to="/" replace /> : <Login />}
+        />
       </Route>
     </Routes>
   );

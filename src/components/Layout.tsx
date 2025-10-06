@@ -8,7 +8,7 @@ export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  //URLから状態を取得
+  // URLから状態を取得
   const getActiveTab = () => {
     switch (location.pathname) {
       case "/chats":
@@ -22,7 +22,7 @@ export default function Layout() {
 
   // タブ変更時の処理
   const handleTabChange = (path: tabPathType) => {
-    navigate(path); // ページ遷移なしでURLのみを変更
+    navigate(path);
   };
 
   return (
