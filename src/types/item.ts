@@ -9,6 +9,11 @@ interface Item {
   bought_at?: string;
   item_price: number;
   user_id: string;
+  profiles?: {
+    original_name: string;
+    school_name: string;
+    grade: number;
+  };
 }
 
 export type { Item };
