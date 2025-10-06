@@ -5,7 +5,7 @@ https://free-market-project.vercel.app/
 
 
 ##ハッカソンで作成、大学生が利用できるフリマアプリを目指して開発しました
-![アプリのスクリーンショット](./docs/images/forreadme.png)
+<img width="2553" height="1327" alt="image" src="https://github.com/user-attachments/assets/522d4159-3d55-4397-b84e-96da00e4e2d2" />
 
 ##技術スタック
 ・フロントエンド 　：React,TypeScript,Vite,Tailwind
