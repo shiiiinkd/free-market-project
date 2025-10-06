@@ -61,7 +61,10 @@ function SoldItem() {
       setError("商品説明を入力してください");
       return false;
     }
-    if (!formData.item_price || parseFloat(formData.item_price.toString()) <= 0) {
+    if (
+      !formData.item_price ||
+      parseFloat(formData.item_price.toString()) <= 0
+    ) {
       setError("正しい価格を入力してください");
       return false;
     }
@@ -91,18 +94,20 @@ function SoldItem() {
 
       // 画像が選択されている場合のみアップロード
       if (imageFile) {
-        const bucket = import.meta.env.VITE_SUPABASE_BUCKET_ITEM_IMAGES || "item-images";
+        const bucket =
+          import.meta.env.VITE_SUPABASE_BUCKET_ITEM_IMAGES || "item-images";
         const ext = imageFile.name.split(".").pop();
         const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
 
-        const { error: uploadError } = await supabase
-          .storage
+        const { error: uploadError } = await supabase.storage
           .from(bucket)
           .upload(path, imageFile, { upsert: false });
 
         if (uploadError) throw uploadError;
 
-        const { data: publicData } = supabase.storage.from(bucket).getPublicUrl(path);
+        const { data: publicData } = supabase.storage
+          .from(bucket)
+          .getPublicUrl(path);
         imageUrl = publicData.publicUrl;
       }
 
@@ -111,7 +116,7 @@ function SoldItem() {
         item_detail: formData.item_detail,
         item_price: formData.item_price,
         user_id: user.id,
-        item_img: imageUrl || "", // 画像が無い場合は空文字でもOK（列がNULL許可なら null でも可）
+        item_img: imageUrl || "",
       });
 
       if (error) throw error;
@@ -120,14 +125,18 @@ function SoldItem() {
       alert("商品を追加しました");
       resetForm();
       setError("");
-    } catch (e: any) {
+    } catch (e) {
       console.error("商品の追加に失敗しました", e);
-      if (typeof e?.message === "string" && e.message.includes("Bucket not found")) {
+      const errorMessage = e instanceof Error ? e.message : "不明なエラー";
+
+      if (errorMessage.includes("Bucket not found")) {
         setError(
-          `Storage バケットが見つかりません。ダッシュボードでバケット "${import.meta.env.VITE_SUPABASE_BUCKET_ITEM_IMAGES || "item-images"}" を作成し、公開設定/アップロード権限を確認してください。`
+          `Storage バケットが見つかりません。ダッシュボードでバケット "${
+            import.meta.env.VITE_SUPABASE_BUCKET_ITEM_IMAGES || "item-images"
+          }" を作成し、公開設定/アップロード権限を確認してください。`
         );
       } else {
-        setError("商品の追加に失敗しました: " + (e?.message || ""));
+        setError("商品の追加に失敗しました: " + errorMessage);
       }
     } finally {
       setSubmitting(false);
@@ -161,11 +170,7 @@ function SoldItem() {
         />
 
         {/* 画像アップロード */}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
+        <input type="file" accept="image/*" onChange={handleFileChange} />
         {imagePreview && (
           <img
             src={imagePreview}

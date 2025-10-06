@@ -1,10 +1,19 @@
 # 学生向けフリマアプリ
 
-##ハッカソンで作成、大学生が利用できるフリマアプリを目指して開発しました
-![アプリのスクリーンショット](./docs/images/forreadme.png) ##技術スタック
+##URL
+https://free-market-project.vercel.app/
 
-###フロント ：React,TypeScript,Vite,Tailwind ###バック　 ：supabase ###デザイン ：Figma ###連絡ツール ：Discord,Notion
-https://docs.google.com/spreadsheets/d/1OoR02cZs5MpsamEfvJ2R1pWYKZ0eDJzQvhIA0a3ayd0/edit?gid=0#gid=0
+##ハッカソンで作成、大学生が利用できるフリマアプリを目指して開発しました
+![アプリのスクリーンショット](./docs/images/forreadme.png)
+
+##技術スタック
+・フロントエンド 　：React,TypeScript,Vite,Tailwind
+・バックエンド　 　：supabase
+・デザイン 　　　　：Figma
+・連絡ツール 　　　：Discord,Notion
+
+##データベース、ルーティングの関係（後に変更されました）
+https://docs.google.com/spreadsheets/d/1nlrevMWd1D48W4ZAkd9BV51HOXDSUNXL2tY_l5x6I-k/edit?usp=sharing
 
 ##私の主な担当
 ・ルーティング設定
