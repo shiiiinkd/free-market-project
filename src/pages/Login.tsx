@@ -3,7 +3,6 @@ import { supabase } from "../lib/supabase";
 import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 
-
 type Mode = "login" | "register";
 function Login() {
   const navigate = useNavigate();
@@ -70,8 +69,6 @@ function Login() {
     }
   };
 
-
-
   const ensureProfileAfterLogin = async () => {
     const { data: userRes } = await supabase.auth.getUser();
     const user = userRes?.user;
@@ -86,8 +83,8 @@ function Login() {
         meta.grade !== undefined
           ? Number(meta.grade)
           : schoolGrade === ""
-            ? null
-            : Number(schoolGrade),
+          ? null
+          : Number(schoolGrade),
       user_icon: meta.user_icon ?? "",
     };
 
@@ -146,7 +143,11 @@ function Login() {
       )}
 
       {mode === "login" ? (
-        <form onSubmit={handleLogin} className="space-y-4" aria-label="ログインフォーム">
+        <form
+          onSubmit={handleLogin}
+          className="space-y-4"
+          aria-label="ログインフォーム"
+        >
           <div className="space-y-1">
             <label htmlFor="email" className="block text-sm font-medium">
               メールアドレス
@@ -200,7 +201,11 @@ function Login() {
           </p>
         </form>
       ) : (
-        <form onSubmit={handleRegister} className="space-y-4" aria-label="新規登録フォーム">
+        <form
+          onSubmit={handleRegister}
+          className="space-y-4"
+          aria-label="新規登録フォーム"
+        >
           <div className="space-y-1">
             <label htmlFor="new-email" className="block text-sm font-medium">
               メールアドレス
@@ -249,7 +254,10 @@ function Login() {
           </div>
 
           <div className="space-y-1">
-            <label htmlFor="new-school-name" className="block text-sm font-medium">
+            <label
+              htmlFor="new-school-name"
+              className="block text-sm font-medium"
+            >
               学校名
             </label>
             <input
@@ -264,7 +272,10 @@ function Login() {
           </div>
 
           <div className="space-y-1">
-            <label htmlFor="new-school-grade" className="block text-sm font-medium">
+            <label
+              htmlFor="new-school-grade"
+              className="block text-sm font-medium"
+            >
               学年（数値）
             </label>
             <input
@@ -275,7 +286,9 @@ function Login() {
               className="w-full rounded-md border px-3 py-2"
               value={schoolGrade}
               onChange={(e) =>
-                setSchoolGrade(e.target.value === "" ? "" : Number(e.target.value))
+                setSchoolGrade(
+                  e.target.value === "" ? "" : Number(e.target.value)
+                )
               }
               disabled={loading}
               required
@@ -303,23 +316,6 @@ function Login() {
           </p>
         </form>
       )}
-
-      <div className="mt-4 flex gap-2">
-        <button
-          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-          onClick={() => navigate('/')}
-        >
-          Homeページ
-        </button>
-        {user && (
-          <button
-            className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
-            onClick={() => navigate('/mypage')}
-          >
-            マイページ
-          </button>
-        )}
-      </div>
     </div>
   );
 }

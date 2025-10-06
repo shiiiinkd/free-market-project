@@ -10,6 +10,8 @@ export default function MyPage() {
   const { user, logout } = useAuth();
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState("");
+  const [schoolName, setSchoolName] = useState("");
+  const [grade, setGrade] = useState<number | "">("");
   const [icon, setIcon] = useState("");
   const [bio, setBio] = useState("");
   const [myItems, setMyItems] = useState<Item[]>([]);
@@ -18,6 +20,8 @@ export default function MyPage() {
   useEffect(() => {
     if (user?.user_metadata) {
       setName(user.user_metadata.original_name || "");
+      setSchoolName(user.user_metadata.school_name || "");
+      setGrade(user.user_metadata.grade || "");
       setIcon(user.user_metadata.user_icon || "");
       setBio(user.user_metadata.bio || "");
     }
@@ -67,15 +71,31 @@ export default function MyPage() {
   }, [user]);
 
   const save = async () => {
+    // user_metadataを更新
     await supabase.auth.updateUser({
       data: {
         original_name: name,
+        school_name: schoolName,
+        grade: grade === "" ? null : Number(grade),
         user_icon: icon,
         bio: bio,
-        school_name: user?.user_metadata?.school_name,
-        grade: user?.user_metadata?.grade,
       },
     });
+
+    // profilesテーブルも更新
+    if (user) {
+      await supabase.from("profiles").upsert(
+        {
+          id: user.id,
+          original_name: name,
+          school_name: schoolName,
+          grade: grade === "" ? null : Number(grade),
+          user_icon: icon,
+        },
+        { onConflict: "id" }
+      );
+    }
+
     setEdit(false);
     alert("更新しました");
   };
@@ -137,20 +157,52 @@ export default function MyPage() {
 
         {edit ? (
           <div className="space-y-3">
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full p-2 border rounded text-sm"
-              placeholder="名前"
-            />
-            <textarea
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              className="w-full p-2 border rounded text-sm"
-              placeholder="自己紹介文"
-              rows={3}
-            />
+            <div>
+              <label className="block text-xs text-gray-600 mb-1">名前</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full p-2 border rounded text-sm"
+                placeholder="名前"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-600 mb-1">学校名</label>
+              <input
+                type="text"
+                value={schoolName}
+                onChange={(e) => setSchoolName(e.target.value)}
+                className="w-full p-2 border rounded text-sm"
+                placeholder="学校名"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-600 mb-1">学年</label>
+              <input
+                type="number"
+                inputMode="numeric"
+                min={0}
+                value={grade}
+                onChange={(e) =>
+                  setGrade(e.target.value === "" ? "" : Number(e.target.value))
+                }
+                className="w-full p-2 border rounded text-sm"
+                placeholder="学年（数値）"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-600 mb-1">
+                自己紹介
+              </label>
+              <textarea
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                className="w-full p-2 border rounded text-sm"
+                placeholder="自己紹介文"
+                rows={3}
+              />
+            </div>
             <div className="flex gap-2">
               <button
                 onClick={save}
