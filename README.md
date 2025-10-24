@@ -4,6 +4,10 @@
 https://free-market-project.vercel.app/
 （ログインのときに、大学名を「立命館大学」とすると学内フィルタが特に効きます）
 
+メールアドレス：shin20040507@icloud.com
+パスワード：shin2004
+でログインをお願いします。
+
 
 ##ハッカソンで作成、大学生が利用できるフリマアプリを目指して開発しました
 <img width="2559" height="1324" alt="image" src="https://github.com/user-attachments/assets/4c9555be-09e3-4dc7-b0e4-b440aa794127" />
