@@ -33,3 +33,6 @@ https://docs.google.com/spreadsheets/d/1nlrevMWd1D48W4ZAkd9BV51HOXDSUNXL2tY_l5x6
 
 ##開発（ハッカソン）期間
 ###9/25~10/5(10/6 以降は個人で開発)
+
+##詳細は以下をご覧ください。
+https://github.com/shiiiinkd/free-market-project/blob/main/docs/DETAILS.md
