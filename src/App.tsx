@@ -11,7 +11,6 @@ import MyPage from "./pages/MyPage";
 
 function App() {
   const { user, loading } = useAuth();
-
   // 認証の読み込み中
   if (loading) {
     return (
