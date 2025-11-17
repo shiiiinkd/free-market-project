@@ -1,9 +1,15 @@
-１　学生フリマアプリ
+学生フリマアプリ
+
+
 ① ハッカソン
+
 ②2025/9/25-2025/10/5 　制作期間：10 日間
-③ フロントエンド：React,TypeScript
+
+③ 
+  フロントエンド：React,TypeScript
 　バックエンド：Supabase
 　開発環境：github,discord,Notion
+ 
 ④
 アプリ URL
 https://free-market-project.vercel.app/ #shin20040507@icloud.com
@@ -12,6 +18,8 @@ https://free-market-project.vercel.app/ #shin20040507@icloud.com
 
 Github リポジトリ
 https://github.com/shiiiinkd/free-market-project
+
+
 
 「大学生が使いやすい」を目標に開発したフリマアプリです。とあるインターンで知り合ったインターン生５人にハッカソンに出ようと声をかけ、合計６人で役割を分担して開発しました。開発期間はキックオフから 10 日間です。
 
